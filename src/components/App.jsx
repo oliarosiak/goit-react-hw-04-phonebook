@@ -18,7 +18,7 @@ const App = () => {
   );
   const [filter, setFilter] = useState('');
 
-  const handleOnSubmit = (name, number) => {
+  const handleOnSubmit = ({name, number}) => {
     const checkedName = contacts.find(contact => {
       const nameLower = name.toLowerCase();
       const contactNameLower = contact.name.toLowerCase();

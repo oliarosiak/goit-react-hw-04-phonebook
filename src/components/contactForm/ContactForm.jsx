@@ -1,57 +1,57 @@
-import { useState } from 'react';
+import { Formik } from 'formik';
+import * as yup from 'yup';
 import PropTypes from 'prop-types';
 import { GiWhiteBook } from 'react-icons/gi';
-import { FormContainer, FormLabel, FormInput, FormBtm } from './ContactForm.styled';
+import {
+  FormContainer,
+  FormLabel,
+  FormInput,
+  FormBtm,
+} from './ContactForm.styled';
 
 const ContactForm = ({ onSubmit }) => {
-    const [name, setName] = useState('');
-    const [number, setNumber] = useState('');
+  const schema = yup.object().shape({
+    name: yup.string().required(),
+    number: yup.string().min(5).max(16).required(),
+    // number: yup.number().min(5).max(16).required(),
+  });
 
-    const handleOnChange = event => {
-        const { name, value } = event.target;
+  const initialValues = {
+    name: '',
+    number: '',
+  };
 
-        switch (name) {
-            case 'name':
-                setName(value);
-                break;
-            case 'number':
-                setNumber(value);
-                break;
-            default:
-                return;
-        }
-    }
+  const handleSubmit = (values, { resetForm }) => {
+    console.log(values);
+    onSubmit(values);
+    resetForm();
+  };
 
-    const handleOnSubmitForm = event => {
-        event.preventDefault();   
-        onSubmit(name, number);
-        setName('');
-        setNumber('');
-    }
-
-    return (
-        <FormContainer onSubmit={handleOnSubmitForm} >
-            <FormLabel >
-                Muggle Name
-                <FormInput type="text" name="name"
-                    pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                    title="Name may contain only letters, apostrophe, dash and spaces."
-                    value={name} onChange={handleOnChange} required />
-            </FormLabel>
-            <FormLabel >
-                Not a Magic Number
-                <FormInput type="tel" name="number"
-                    pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-                    title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +. At least 5 symbols"
-                    value={number} onChange={handleOnChange} required />
-            </FormLabel>
-            <FormBtm type="submit" ><GiWhiteBook /> Lumos Contact!</FormBtm>
-        </FormContainer>
-    );
-}
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={schema}
+      onSubmit={handleSubmit}
+    >
+      <FormContainer autoComplete="off">
+        <FormLabel htmlFor="name">
+          Muggle Name
+          <FormInput type="text" name="name" />
+        </FormLabel>
+        <FormLabel htmlFor="number">
+          Not a Magic Number
+          <FormInput type="tel" name="number" />
+        </FormLabel>
+        <FormBtm type="submit">
+          <GiWhiteBook /> Lumos Contact!
+        </FormBtm>
+      </FormContainer>
+    </Formik>
+  );
+};
 
 ContactForm.propType = {
-    onSubmit: PropTypes.func.isRequired,   
-}
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export default ContactForm;
