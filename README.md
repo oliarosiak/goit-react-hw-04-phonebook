@@ -1,4 +1,4 @@
-# React Homework - 3 - PhoneBook
+# React Homework - 4 - PhoneBook
 
 To your attention, an application for saving phone numbers - Hogwarts Magical Phonebook.
 
@@ -8,8 +8,10 @@ To your attention, an application for saving phone numbers - Hogwarts Magical Ph
 `«Javascript»`
 `«React Icons / library»`
 `«Emotion / library»`
+`«Formik / library»`
 `«LocalStorage»`
 `«prop-types / npm»`
+`«yup / npm»`
 
 Used assembly: [React project template](https://github.com/goitacademy/react-homework-template#readme)
 
